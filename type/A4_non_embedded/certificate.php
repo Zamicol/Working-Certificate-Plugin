@@ -108,6 +108,14 @@ if ($certificate->printteacher) {
             certificate_print_text($pdf, $sigx, $sigy + ($i * 4), 'L', 'Times', '', 12, fullname($teacher));
         }
     }
+}if ($certificate->employeeid) {
+    $context = context_module::instance($cm->id);
+    if ($employees = get_users_by_capability($context, 'mod/certificate:employeeid', '', $sort = 'u.lastname ASC', '', '', '', '', false)) {
+        foreach ($employees as $employee) {
+            $i++;
+            certificate_print_text($pdf, $sigx, $sigy + ($i * 4), 'L', 'Times', '', 12, fullname($employee));
+        }
+    }
 }
 
 certificate_print_text($pdf, $custx, $custy, 'L', null, null, null, $certificate->customtext);
