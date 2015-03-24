@@ -97,8 +97,7 @@ class mod_certificate_mod_form extends moodleform_mod {
         $mform->addHelpButton('datefmt', 'datefmt', 'certificate');
 
 		//Employee ID added to selection options
-		$Empoptions = array( 0 => get_string('No'), 1 => get_string('Yes'));
-        $mform->addElement('select', 'employeeid', get_string('employeeid', 'certificate'), $Empoptions);
+        $mform->addElement('select', 'employeeid', get_string('employeeid', 'certificate'), $ynoptions);
         $mform->setDefault('employeeid', 0);
         $mform->addHelpButton('employeeid', 'employeeid', 'certificate');
 		
