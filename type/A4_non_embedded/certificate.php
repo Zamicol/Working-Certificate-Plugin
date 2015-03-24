@@ -90,8 +90,12 @@ certificate_print_text($pdf, $x, $y, 'C', 'Helvetica', '', 30, get_string('title
 $pdf->SetTextColor(0, 0, 0);
 certificate_print_text($pdf, $x, $y + 20, 'C', 'Times', '', 20, get_string('certify', 'certificate'));
 certificate_print_text($pdf, $x, $y + 36, 'C', 'Helvetica', '', 30, fullname($USER));
-certificate_print_text($pdf, $x, $y + 55, 'C', 'Helvetica', '', 20, get_string('employeeid', 'certificate'));
 certificate_print_text($pdf, $x, $y + 72, 'C', 'Helvetica', '', 20, format_string($course->fullname));
+// added functionality to address the employeeid situation
+if ($certificate->employeeid) {
+    certificate_print_text($pdf, $x, $y + 80, 'C', 'Times', '', 20, get_string('employeeid', 'certificate') . ': ' . $certificate->employeeid);
+}
+
 certificate_print_text($pdf, $x, $y + 92, 'C', 'Helvetica', '', 14, certificate_get_date($certificate, $certrecord, $course));
 certificate_print_text($pdf, $x, $y + 102, 'C', 'Times', '', 10, certificate_get_grade($certificate, $course));
 certificate_print_text($pdf, $x, $y + 112, 'C', 'Times', '', 10, certificate_get_outcome($certificate, $course));
@@ -106,14 +110,6 @@ if ($certificate->printteacher) {
         foreach ($teachers as $teacher) {
             $i++;
             certificate_print_text($pdf, $sigx, $sigy + ($i * 4), 'L', 'Times', '', 12, fullname($teacher));
-        }
-    }
-}if ($certificate->employeeid) {
-    $context = context_module::instance($cm->id);
-    if ($employees = get_users_by_capability($context, 'mod/certificate:employeeid', '', $sort = 'u.lastname ASC', '', '', '', '', false)) {
-        foreach ($employees as $employee) {
-            $i++;
-            certificate_print_text($pdf, $sigx, $sigy + ($i * 4), 'L', 'Times', '', 12, fullname($employee));
         }
     }
 }
